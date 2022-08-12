@@ -10,9 +10,9 @@ for s in range(0, num_of_stops):
     o = random.uniform(0, num_of_stops)
     h = random.uniform(0, num_of_stops)
     if (o.is_integer() is False) and (h.is_integer() is False):
-        if o > 2:
+        if o > num_of_stops/2:
             o = random.randint(0, num_of_stops)
-        elif o <= 2:
+        elif o <= num_of_stops/2:
             h = random.randint(0, num_of_stops)
         
     x.append(o)
