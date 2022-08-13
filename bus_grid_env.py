@@ -30,28 +30,24 @@ for a, label in enumerate(annotations):
     plt.annotate(label, (x[a], y[a]))
 
 
-count_x = Counter(x)
-count_y = Counter(y)
-
-result_x = [i for i, j in count_x.items() if j > 1]
-result_y = [i for i, j in count_y.items() if j > 1]
-
 for x_cord, y_cord in zip(x, y):
-    plt.text(x_cord, y_cord + 0.15, '({}, {})'.format(x_cord, y_cord))
-    if result_x != []:
+    print(x_cord, y_cord)
         
-    
-
-print(count_x)
-print(count_y)
-print(result_x)
-print(result_y)
-
 axis = np.array([0, 4, 0 ,4])
 plt.axis(axis)
 
 l = line1.pop(0)
 l.remove()
+
+for i in range(1, num_of_stops + 2):
+    traffic_cond = random.randint(1, 4)
+    if traffic_cond == 1:
+        plt.axhline(y = i - 1, xmin = i - 1, xmax = num_of_stops, c = "g", linewidth = 6.0)
+    elif traffic_cond == 2:
+        plt.axhline(y = i - 1, xmin = i - 1, xmax = num_of_stops, c = "y", linewidth = 6.0)
+    elif traffic_cond == 3:
+         plt.axhline(y = i - 1, xmin = i - 1, xmax = num_of_stops, c = "r", linewidth = 6.0)
+   
 
 plt.xticks(range(0, num_of_stops))
 plt.yticks(range(0, num_of_stops))
@@ -61,4 +57,5 @@ plt.ylabel("Longitude")
 
 plt.tight_layout()
 plt.grid()
-#plt.show()
+plt.show()
+
