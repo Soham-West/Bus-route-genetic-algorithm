@@ -43,6 +43,7 @@ for i in range(1, num_of_stops + 2):
         plt.axvline(x = i - 1, ymin = 0, ymax = num_of_stops, c = "y", linewidth = 5.5)
     elif traffic_cond_y == 3:
          plt.axvline(x = i - 1, ymin = 0, ymax = num_of_stops, c = "r", linewidth = 5.5)
+         
 #Creates the list with all of the stops name and school in random order
 annotations_1 = ["School"]
 annotations_2 = [chr(ord("@") + number) for number in range(1, num_of_stops + 1)]
