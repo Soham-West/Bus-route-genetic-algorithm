@@ -24,6 +24,25 @@ for s in range(0, num_of_stops + 1):
     x.append(o)
     y.append(h)
 
+# Sets the traffic conditions for the x coordinate
+for i in range(1, num_of_gridlines + 2):
+    traffic_cond_x = random.randint(1, 3)
+    if traffic_cond_x == 1:
+        plt.axhline(y = i - 1, xmin = 0, xmax = num_of_stops, c = "g", linewidth = 5.5)
+    elif traffic_cond_x == 2:
+        plt.axhline(y = i - 1, xmin = 0, xmax = num_of_stops, c = "y", linewidth = 5.5)
+    elif traffic_cond_x == 3:
+         plt.axhline(y = i - 1, xmin = 0, xmax = num_of_stops, c = "r", linewidth = 5.5)
+
+# Sets the traffic conditions for the y coordinate
+for i in range(1, num_of_stops + 2):
+    traffic_cond_y = random.randint(1, 3)
+    if traffic_cond_y == 1:
+        plt.axvline(x = i - 1, ymin = 0, ymax = num_of_stops, c = "g", linewidth = 5.5)
+    elif traffic_cond_y == 2:
+        plt.axvline(x = i - 1, ymin = 0, ymax = num_of_stops, c = "y", linewidth = 5.5)
+    elif traffic_cond_y == 3:
+         plt.axvline(x = i - 1, ymin = 0, ymax = num_of_stops, c = "r", linewidth = 5.5)
 #Creates the list with all of the stops name and school in random order
 annotations_1 = ["School"]
 annotations_2 = [chr(ord("@") + number) for number in range(1, num_of_stops + 1)]
@@ -47,26 +66,6 @@ for x_cord, y_cord in zip(x, y):
 # Sets the axis for the grid       
 axis = np.array([0, 4, 0 ,4])
 plt.axis(axis)
-
-# Sets the traffic conditions for the x coordinate
-for i in range(1, num_of_gridlines + 2):
-    traffic_cond_x = random.randint(1, 3)
-    if traffic_cond_x == 1:
-        plt.axhline(y = i - 1, xmin = 0, xmax = num_of_stops, c = "g", linewidth = 5.5)
-    elif traffic_cond_x == 2:
-        plt.axhline(y = i - 1, xmin = 0, xmax = num_of_stops, c = "y", linewidth = 5.5)
-    elif traffic_cond_x == 3:
-         plt.axhline(y = i - 1, xmin = 0, xmax = num_of_stops, c = "r", linewidth = 5.5)
-
-# Sets the traffic conditions for the y coordinate
-for i in range(1, num_of_stops + 2):
-    traffic_cond_y = random.randint(1, 3)
-    if traffic_cond_y == 1:
-        plt.axvline(x = i - 1, ymin = 0, ymax = num_of_stops, c = "g", linewidth = 5.5)
-    elif traffic_cond_y == 2:
-        plt.axvline(x = i - 1, ymin = 0, ymax = num_of_stops, c = "y", linewidth = 5.5)
-    elif traffic_cond_y == 3:
-         plt.axvline(x = i - 1, ymin = 0, ymax = num_of_stops, c = "r", linewidth = 5.5)
    
 # Sets x and y ticks to the number of gridlines
 plt.xticks(range(0, num_of_gridlines))
