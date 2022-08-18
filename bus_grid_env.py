@@ -60,9 +60,14 @@ l.remove()
 for a, labels in enumerate(used_annotations):
     plt.text(x[a], y[a], used_annotations[a], fontweight = "bold")
 
+x_cords = []
+y_cords = []
+
 # Prints the x coordinates and y coordinates for the branch and bound algorithm
 for x_cord, y_cord in zip(x, y):
     print(x_cord, y_cord)
+    x_cords.append(x_cord)
+    y_cords.append(y_cord)
 
 # Sets the axis for the grid       
 axis = np.array([0, 4, 0 ,4])
@@ -84,4 +89,4 @@ plt.ylabel("Longitude")
 plt.tight_layout()
 plt.grid()
 plt.legend(handles = [green_traffic, yellow_traffic, red_traffic], prop = {"size": 8.5})
-plt.show()
+#plt.show()
