@@ -1,4 +1,5 @@
 from bus_grid_env import *
+import math
 #print(((num_of_gridlines + 1)**2) - num_of_gridlines)
 ##print(y_cords)
 def make_matrix(len_of_side):
@@ -24,11 +25,12 @@ def make_matrix(len_of_side):
         else:
             graph[str(i)] = [str(i - (num_of_gridlines + 1)), str(i - 1), str(i + 1), str(i + num_of_gridlines + 1)]
         #graph[i] = [i]
+    
     return graph   
         
 
 graph = make_matrix(num_of_gridlines)
-
+#print(graph)
 """graph = {
         "A": ["B", "F"],
         "B": ["A", "C", "G"],
@@ -56,12 +58,34 @@ graph = make_matrix(num_of_gridlines)
         "X": ["S", "W", "Y"],
         "Y": ["T", "X"]
         }"""
+s_path = []
+def get_nearest_node(point1_x, point1_y, point2_x, point2_y):
+    x_1 = float(point1_x)
+    x_2 = float(point2_x)
+    y_1 = float(point1_y)
+    y_2 = float(point2_y)
+    if y_1.is_integer() == True and x_2 > x_1:
+        s_path.append("R")
+        t = math.floor(x_1 + 1.0)
+        z = [t, y_1]
+        print(z)
+    elif y_1.is_integer() == True and x_2 < x_1:
+        s_path.append("L")
+        t = math.ceil(x_1 - 1.0)
 
-        
+    elif x_1.is_integer() == True and y_2 > y_1:
+        s_path.append("U")
+    elif x_1.is_integer() == True and y_2 < y_1:
+        s_path.append("D")
+    print(s_path)
+    
+get_nearest_node(x_cords[0], y_cords[0], x_cords[1], y_cords[1])
+print(used_annotations[0], used_annotations[1])
+plt.show()
+
 
 def bfs(graph, p_start, p_end):
     queue = []
-
     queue.append([p_start])
     visited = set()
     while queue:
@@ -84,18 +108,17 @@ def bfs(graph, p_start, p_end):
 
             print(r_path)
             return path
-            #return new_path[0]
         else:
             for adjacent in graph.get(node, []):
                 if adjacent not in visited:
                     new_path = list(path)
                     new_path.append(adjacent)
                     queue.append(new_path)
-            
+          
 
         
 
 
   
-print(bfs(graph, "1", "15"))
+print(bfs(graph, "1", "13"))
 
