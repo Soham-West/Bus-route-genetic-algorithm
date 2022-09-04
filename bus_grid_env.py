@@ -5,8 +5,8 @@ import matplotlib.patches as mp
 #Create 4 by 4 grid
 
 # Sets number of stops and the size of grid
-num_of_stops = 4
-num_of_gridlines = 4
+num_of_stops = 5
+num_of_gridlines = 5
 
 # Sets x and y so that one integer and one float coordinate comes out. 
 # Also sets the length of x and y to the number of stops
@@ -74,8 +74,8 @@ axis = np.array([0, 4, 0 ,4])
 plt.axis(axis)
    
 # Sets x and y ticks to the number of gridlines
-plt.xticks(range(0, num_of_gridlines))
-plt.yticks(range(0, num_of_gridlines))
+plt.xticks(range(0, num_of_gridlines + 1))
+plt.yticks(range(0, num_of_gridlines + 1))
 
 #Sets the legend
 green_traffic = mp.Patch(color = "green", label = "Low Traffic")
