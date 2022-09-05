@@ -29,7 +29,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/sohampatil/Polygence/Bus-route-genetic-algorithm/busgrid"
+set -gx VIRTUAL_ENV "/Users/sohampatil/Polygence_0/Bus-route-genetic-algorithm/busgrid"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
