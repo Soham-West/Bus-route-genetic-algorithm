@@ -24,6 +24,7 @@ for s in range(0, num_of_stops + 1):
     x.append(o)
     y.append(h)
 
+
 # Sets the traffic conditions for the x coordinate
 for i in range(1, num_of_gridlines + 2):
     traffic_cond_x = random.randint(1, 3)

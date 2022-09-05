@@ -92,18 +92,8 @@ def get_nearest_node(point1_x, point1_y, point2_x, point2_y):
 
 start_point = (get_nearest_node(x_cords[0], y_cords[0], x_cords[1], y_cords[1]))
 
-
-#end_point = str(get_nearest_node(x_cords[1], y_cords[1], x_cords[0], y_cords[0]))
-#print(start_point)
-
-#print(end_point)
 print(used_annotations[0])
 print(used_annotations[1])
-stop_break = 0
-#if start_point == end_point:
-   #while stop_break == 0:
-    #break
-#print(int(i))
 l_path = []
 def end_node(p1x, p1y, p2x, p2y):
     x_1 = float(p1x)
