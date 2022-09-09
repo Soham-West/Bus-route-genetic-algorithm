@@ -2,22 +2,23 @@ from bus_grid_env import *
 import math
 #print(((num_of_gridlines + 1)**2) - num_of_gridlines)
 ##print(y_cords)
+
 def make_matrix(len_of_side):
     len_of_side = ((num_of_gridlines + 1)**2)
     graph = {}
     for i in range(1, len_of_side + 1):
         if i == 1:
-            graph[str(i)] = [str(i + 1), str(i + num_of_gridlines + 1)]
+            graph[str(i)] = [[str(i + 1), int(x_traffic[0])], [str(i + num_of_gridlines + 1), int(y_traffic[0])]]
         elif i == num_of_gridlines + 1:
-            graph[str(i)] = [str(i - 1), str(i + num_of_gridlines + 1)]
+            graph[str(i)] = [[str(i - 1), int(x_traffic[i - 2])], [str(i + num_of_gridlines + 1), int(y_traffic[i - 1])]]
         elif i == len_of_side - num_of_gridlines:
-            graph[str(i)] = [str(i - (num_of_gridlines + 1)), str(i + 1)]
+            graph[str(i)] = [[str(i - (num_of_gridlines + 1)), int(y_traffic[i - (num_of_gridlines + 2)])], [str(i + 1), int(x_traffic[i - (num_of_gridlines + 1)])]]
         elif i == len_of_side:
-            graph[str(i)] = [str(i - (num_of_gridlines + 1)), str(i - 1)]
+            graph[str(i)] = [[str(i - (num_of_gridlines + 1)), int(y_traffic[-1])], [str(i - 1), int(x_traffic[-1])]]
         elif 1 < i < num_of_gridlines + 1:
-            graph[str(i)] = [str(i - 1), str(i + 1), str(i + num_of_gridlines + 1)]
+            graph[str(i)] = [[str(i - 1), int(x_traffic[i - 2])], [str(i + 1), int(x_traffic[i - 1])], [str(i + num_of_gridlines + 1), int(y_traffic[i - 1])]]
         elif (i - 1)%(num_of_gridlines + 1) == 0:
-            graph[str(i)] = [str(i - (num_of_gridlines + 1)), str(i + 1), str(i + num_of_gridlines + 1)]
+            graph[str(i)] = [[str(i - (num_of_gridlines + 1)), int(y_traffic[num_of_gridlines])], str(i + 1), str(i + num_of_gridlines + 1)]
         elif i%(num_of_gridlines + 1) == 0:
             graph[str(i)] = [str(i - (num_of_gridlines + 1)), str(i - 1), str(i + num_of_gridlines + 1)]
         elif (len_of_side - num_of_gridlines) < i < len_of_side:
@@ -25,12 +26,12 @@ def make_matrix(len_of_side):
         else:
             graph[str(i)] = [str(i - (num_of_gridlines + 1)), str(i - 1), str(i + 1), str(i + num_of_gridlines + 1)]
         #graph[i] = [i]
-    #print(graph)
     return graph   
         
 
 graph = make_matrix(num_of_gridlines)
-#print(graph)
+print(graph)
+#plt.show()
 """graph = {
         "A": ["B", "F"],
         "B": ["A", "C", "G"],
@@ -80,6 +81,8 @@ def get_nearest_node(point1_x, point1_y, point2_x, point2_y):
         s_path.append("D")
         t = math.ceil(y_1 - 1.0)
         z = [int(x_1), t]
+    else:
+        s_path.append("Start")
     pp = 1
     p1_x = z[0]
     p1_y = (num_of_gridlines - z[1]) * (num_of_gridlines + 1)
@@ -125,6 +128,8 @@ def end_node(p1x, p1y, p2x, p2y):
         l_path.append("U")
     elif z[1] < p1y and z[0] == p1x:
         l_path.append("D")
+    else:
+        l_path.append("Finish")
     return str(n)
 
 
@@ -146,6 +151,7 @@ def bfs(graph, p_start, p_end):
                     new_path = list(path)
                     new_path.append(adjacent)
                     queue.append(new_path)
+                    
 
 r_path = []
 r_path.append(s_path[0])
@@ -167,4 +173,5 @@ r_path.append(l_path[0])
 print(r_path)
 print(path)
 
-plt.show()
+#plt.show()
+
