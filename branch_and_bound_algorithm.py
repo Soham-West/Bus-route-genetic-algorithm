@@ -18,20 +18,23 @@ def make_matrix(len_of_side):
         elif 1 < i < num_of_gridlines + 1:
             graph[str(i)] = [[str(i - 1), int(x_traffic[i - 2])], [str(i + 1), int(x_traffic[i - 1])], [str(i + num_of_gridlines + 1), int(y_traffic[i - 1])]]
         elif (i - 1)%(num_of_gridlines + 1) == 0:
-            graph[str(i)] = [[str(i - (num_of_gridlines + 1)), int(y_traffic[num_of_gridlines])], str(i + 1), str(i + num_of_gridlines + 1)]
+            num_of_iters = 0
+            graph[str(i)] = [[str(i - (num_of_gridlines + 1)), int(y_traffic[i - (num_of_gridlines + 2)])], [str(i + 1), int(x_traffic[(i - 2 - num_of_iters)])], [str(i + num_of_gridlines + 1), int(y_traffic[i - 1])]]
+            num_of_iters += 1
         elif i%(num_of_gridlines + 1) == 0:
-            graph[str(i)] = [str(i - (num_of_gridlines + 1)), str(i - 1), str(i + num_of_gridlines + 1)]
+            num_of_iters_0 = 0
+            graph[str(i)] = [[str(i - (num_of_gridlines + 1)), int(y_traffic[i - (num_of_gridlines + 2)])], [str(i - 1), int(x_traffic[i - 3 - num_of_iters_0])], [str(i + num_of_gridlines + 1), int(y_traffic[i - 1])]]
+            num_of_iters_0 += 1
         elif (len_of_side - num_of_gridlines) < i < len_of_side:
-            graph[str(i)] = [str(i + num_of_gridlines + 1), str(i - 1), str(i + 1)]
+            graph[str(i)] = [[str(i - (num_of_gridlines + 1)), int(y_traffic[i - (num_of_gridlines + 2)])], [str(i - 1), int(x_traffic[i - (num_of_gridlines + 2)])], [str(i + 1), int(x_traffic[i - (num_of_gridlines + 1)])]]
         else:
-            graph[str(i)] = [str(i - (num_of_gridlines + 1)), str(i - 1), str(i + 1), str(i + num_of_gridlines + 1)]
+            k = math.floor(i/(num_of_gridlines + 1))
+            graph[str(i)] = [[str(i - (num_of_gridlines + 1)), int(y_traffic[i - (num_of_gridlines + 2)])], [str(i - 1), int(x_traffic[i - k - 2])], [str(i + 1), int(x_traffic[i - k - 1])], [str(i + num_of_gridlines + 1), int(y_traffic[i - 1])]]
         #graph[i] = [i]
     return graph   
         
-
 graph = make_matrix(num_of_gridlines)
 print(graph)
-#plt.show()
 """graph = {
         "A": ["B", "F"],
         "B": ["A", "C", "G"],
@@ -132,32 +135,51 @@ def end_node(p1x, p1y, p2x, p2y):
         l_path.append("Finish")
     return str(n)
 
+def bfs(graph, start, end):
+    shortest_distance = {}
+    pred = {}
+    unseen_N = graph
+    inf = 123456789
+    path = []
+    for node in unseen_N:
+        shortest_distance[node] = inf
+    shortest_distance[start] = 0
+    while unseen_N:
+        min_distance = None
+        for node in unseen_N:
+            if min_distance is None:
+                min_distance = node
+            elif shortest_distance[node] < shortest_distance[min_distance]:
+                min_distance = node
+        options = graph.get(str(min_distance))
+        for c_node, weight in options:
+            if weight + shortest_distance[min_distance] < shortest_distance[c_node]:
+                shortest_distance[c_node] = weight + shortest_distance[min_distance]
+                pred[c_node] = min_distance
+        unseen_N.pop(min_distance)
+    current_N = end
 
+    while current_N != start:
+        try:
+            path.insert(0, current_N)
+            current_N = pred[current_N]
+        except KeyError:
+            print("Starting Point and End Point are the same") 
+            break
+    path.insert(0, start)
 
-def bfs(graph, p_start, p_end):
-    queue = []
-    queue.append([p_start])
-    visited = set()
-    while queue:
-        path = queue.pop(0)
-        node = path[-1]
-        if node in visited:
-            continue
-        if node == p_end:
-           return path
-        else:
-            for adjacent in graph.get(node, []):
-                if adjacent not in visited:
-                    new_path = list(path)
-                    new_path.append(adjacent)
-                    queue.append(new_path)
-                    
+    if shortest_distance[end] != inf:
+        print(shortest_distance[end])
+        print(path)
+        return [path, shortest_distance[end]]
 
 r_path = []
 r_path.append(s_path[0])
 end_point = end_node(x_cords[1], y_cords[1], x_cords[0], y_cords[0])
+print("Start Point", start_point)
+print("End Point", end_point)
 path_1 = bfs(graph, start_point, end_point)
-path = path_1
+path = path_1[0]
 
 for direction in range(0, (len(path) - 1)):
 
@@ -171,7 +193,12 @@ for direction in range(0, (len(path) - 1)):
         r_path.append("D")
 r_path.append(l_path[0])
 print(r_path)
-print(path)
-
 #plt.show()
-
+def nodes_to_cords(node):
+    node0 = int(node)
+    x = node0 % (num_of_gridlines + 1)
+    y_k = math.floor(node0/(num_of_gridlines + 1.1))
+    y = num_of_gridlines - y_k
+    return [x, y]
+#nodes_to_cords
+#plt.show()

@@ -6,7 +6,7 @@ import matplotlib.patches as mp
 
 # Sets number of stops and the size of grid
 num_of_stops = 4
-num_of_gridlines = 50
+num_of_gridlines = 4
 
 # Sets x and y so that one integer and one float coordinate comes out. 
 # Also sets the length of x and y to the number of stops
