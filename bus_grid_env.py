@@ -65,7 +65,7 @@ print(y_traffic)
 annotations_1 = ["School"]
 annotations_2 = [chr(ord("@") + number) for number in range(1, num_of_stops + 1)]
 annotations = annotations_1 + annotations_2
-used_annotations = random.sample(annotations, len(annotations))
+print(annotations)
 
 # Plots the line with x and y and sets ccolor to blue marks the points with a dot
 # Also removes the line to remove extra color.
@@ -74,8 +74,8 @@ l = line1.pop(0)
 l.remove()
 
 # Enumerates used_annotations into numbers and then adds text to the points
-for a, labels in enumerate(used_annotations):
-    plt.text(x[a], y[a], used_annotations[a], fontweight = "bold")
+for a, labels in enumerate(annotations):
+    plt.text(x[a], y[a], annotations[a], fontweight = "bold")
 
 x_cords = []
 y_cords = []
