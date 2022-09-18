@@ -1,8 +1,6 @@
 from bus_grid_env import *
 import math
-#print(((num_of_gridlines + 1)**2) - num_of_gridlines)
-##print(y_cords)
-
+# Makes the graph the bfs algorithm traverses through
 def make_matrix(len_of_side):
     len_of_side = ((num_of_gridlines + 1)**2)
     graph = {}
@@ -32,42 +30,13 @@ def make_matrix(len_of_side):
             graph[str(i)] = [[str(i - (num_of_gridlines + 1)), int(y_traffic[i - (num_of_gridlines + 2)])], [str(i - 1), int(x_traffic[i - k - 2])], [str(i + 1), int(x_traffic[i - k - 1])], [str(i + num_of_gridlines + 1), int(y_traffic[i - 1])]]
         #graph[i] = [i]
     return graph   
-        
-graph = make_matrix(num_of_gridlines)
-print(graph)
-"""graph = {
-        "A": ["B", "F"],
-        "B": ["A", "C", "G"],
-        "C": ["B", "D", "H"],
-        "D": ["C", "E", "I"],
-        "E": ["D", "J"],
-        "F": ["A", "G", "K"],
-        "G": ["B", "F", "H", "L"],
-        "H": ["C", "G", "I", "M"],
-        "I": ["D", "H", "J", "N"],
-        "J": ["E", "I", "O"],
-        "K": ["F", "L", "P"],
-        "L": ["G", "K", "M", "Q"],
-        "M": ["H", "L", "N", "R"],
-        "N": ["I", "M", "O", "S"],
-        "O": ["J", "N", "T"],
-        "P": ["K", "Q", "U"],
-        "Q": ["L", "P", "R", "V"],
-        "R": ["M", "Q", "S", "W"],
-        "S": ["N", "R", "T", "X"],
-        "T": ["O", "S", "Y"],
-        "U": ["P", "V"],
-        "V": ["Q", "U", "W"],
-        "W": ["R", "X"],
-        "X": ["S", "W", "Y"],
-        "Y": ["T", "X"]
-        }"""
-s_path = []
+# Gets the nearest starting node from the start point
 def get_nearest_node(point1_x, point1_y, point2_x, point2_y):
     x_1 = float(point1_x)
     x_2 = float(point2_x)
     y_1 = float(point1_y)
     y_2 = float(point2_y)
+    s_path = []
     if y_1.is_integer() == True and x_2 > x_1:
         s_path.append("R")
         t = math.floor(int(x_1) + 1.0)
@@ -91,21 +60,14 @@ def get_nearest_node(point1_x, point1_y, point2_x, point2_y):
     p1_y = (num_of_gridlines - z[1]) * (num_of_gridlines + 1)
     group = p1_x + p1_y
     pp += group
-    return str(pp)
-
-
-    
-
-start_point = (get_nearest_node(x_cords[0], y_cords[0], x_cords[1], y_cords[1]))
-
-print(used_annotations[0])
-print(used_annotations[1])
-l_path = []
+    return [str(pp), s_path]
+# Gets the nearest end node from the end point
 def end_node(p1x, p1y, p2x, p2y):
     x_1 = float(p1x)
     x_2 = float(p2x)
     y_1 = float(p1y)
     y_2 = float(p2y)
+    l_path = []
     if y_1.is_integer() == True and x_2 > x_1:
         t = math.floor(int(x_1) + 1.0)
         z = [t, int(y_1)]
@@ -133,14 +95,14 @@ def end_node(p1x, p1y, p2x, p2y):
         l_path.append("D")
     else:
         l_path.append("Finish")
-    return str(n)
-
+    return [str(n), l_path]
+#Breadth First algorithm
 def bfs(graph, start, end):
     shortest_distance = {}
     pred = {}
     unseen_N = graph
     inf = 123456789
-    path = []
+    track_path = []
     for node in unseen_N:
         shortest_distance[node] = inf
     shortest_distance[start] = 0
@@ -161,44 +123,72 @@ def bfs(graph, start, end):
 
     while current_N != start:
         try:
-            path.insert(0, current_N)
+            track_path.insert(0, current_N)
             current_N = pred[current_N]
         except KeyError:
             print("Starting Point and End Point are the same") 
             break
-    path.insert(0, start)
+    track_path.insert(0, start)
 
     if shortest_distance[end] != inf:
-        print(shortest_distance[end])
-        print(path)
-        return [path, shortest_distance[end]]
+        #print(shortest_distance[end])
+        #print(path)
+        return [track_path, shortest_distance[end]]
 
-r_path = []
-r_path.append(s_path[0])
-end_point = end_node(x_cords[1], y_cords[1], x_cords[0], y_cords[0])
-print("Start Point", start_point)
-print("End Point", end_point)
-path_1 = bfs(graph, start_point, end_point)
-path = path_1[0]
-
-for direction in range(0, (len(path) - 1)):
-
-    if int(path[direction]) + 1 == int(path[direction + 1]):
-        r_path.append("R")
-    elif int(path[direction]) - (num_of_gridlines + 1) == int(path[direction + 1]):
-        r_path.append("U")
-    elif int(path[direction]) - 1 == int(path[direction + 1]):
-        r_path.append("L")
-    elif int(path[direction]) + (num_of_gridlines + 1) == int(path[direction + 1]):
-        r_path.append("D")
-r_path.append(l_path[0])
-print(r_path)
-#plt.show()
 def nodes_to_cords(node):
     node0 = int(node)
-    x = node0 % (num_of_gridlines + 1)
-    y_k = math.floor(node0/(num_of_gridlines + 1.1))
+    x = math.floor((node0 % (num_of_gridlines + 1)) - 1)
+    y_k = math.floor(node0/(num_of_gridlines + 1))
     y = num_of_gridlines - y_k
+    if node0 % (num_of_gridlines + 1) == 0:
+        x = num_of_gridlines
+        y_k = (node0/(num_of_gridlines + 1)) - 1
+        y = num_of_gridlines - y_k
     return [x, y]
-#nodes_to_cords
+#print(nodes_to_cords("6"))
+def fastest_2_points(point1, point2):
+    k = ord(point1) - 64
+    s = ord(point2) - 64
+    point1x = x_cords[k]
+    point1y = y_cords[k]
+    point2x = x_cords[s]
+    point2y = y_cords[s]
+    r_path = []
+    r_path.append(get_nearest_node(point1x, point1y, point2x, point2y)[1][0])
+    start_point = get_nearest_node(point1x, point1y, point2x, point2y)[0]
+    end_point = end_node(point2x, point2y, point1x, point1y)[0]
+    graph = make_matrix(num_of_gridlines)
+    path = bfs(graph, start_point, end_point)[0]
+    graph = make_matrix(num_of_gridlines)
+    shortest_d = bfs(graph, start_point, end_point)[1]
+    for direction in range(0, (len(path)) - 1):
+        if int(path[direction]) + 1 == int(path[direction + 1]):
+            r_path.append("R")
+        elif int(path[direction]) - (num_of_gridlines + 1) == int(path[direction + 1]):
+            r_path.append("U")
+        elif int(path[direction]) - 1 == int(path[direction + 1]):
+            r_path.append("L")
+        elif int(path[direction]) + (num_of_gridlines + 1) == int(path[direction + 1]):
+            r_path.append("D")
+    graph = make_matrix(num_of_gridlines)
+    r_path.append(end_node(point2x, point2y, point1x, point1y)[1][0])
+    point1_movement = ((point1x % 1) + (point1y % 1)) * 2
+    point2_movement = ((point2x % 1) + (point2y % 1)) * 2
+    point_movement = point1_movement + point2_movement
+    shortest_d += round(point_movement, 1)
+    return [shortest_d, path, r_path]
+
+def draw_graph(path, r_path):
+    """if r_path[0] = "U":
+        plt.plot[0]"""
+    for i in range(0, len(path) - 1):
+        x = nodes_to_cords(path[i])[0]
+        y = nodes_to_cords(path[i])[1]
+        x_1 = nodes_to_cords(path[i + 1])[0]
+        y_1 = nodes_to_cords(path[i + 1])[1]
+        plt.plot([x, x_1], [y, y_1], "aquamarine", lw = 6)
+        #print(x)
+        #print(y)
+        #print(x_1)
+        #print(y_1)
 #plt.show()
