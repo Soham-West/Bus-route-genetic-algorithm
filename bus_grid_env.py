@@ -5,8 +5,8 @@ import matplotlib.patches as mp
 #Create 4 by 4 grid
 
 # Sets number of stops and the size of grid
-num_of_stops = 5
-num_of_gridlines = 5
+num_of_stops = 4
+num_of_gridlines = 4
 
 # Sets x and y so that one integer and one float coordinate comes out. 
 # Also sets the length of x and y to the number of stops
@@ -24,31 +24,48 @@ for s in range(0, num_of_stops + 1):
     x.append(o)
     y.append(h)
 
-# Sets the traffic conditions for the x coordinate
-for i in range(1, num_of_gridlines + 2):
-    traffic_cond_x = random.randint(1, 3)
-    if traffic_cond_x == 1:
-        plt.axhline(y = i - 1, xmin = 0, xmax = num_of_stops, c = "g", linewidth = 5.5)
-    elif traffic_cond_x == 2:
-        plt.axhline(y = i - 1, xmin = 0, xmax = num_of_stops, c = "y", linewidth = 5.5)
-    elif traffic_cond_x == 3:
-         plt.axhline(y = i - 1, xmin = 0, xmax = num_of_stops, c = "r", linewidth = 5.5)
 
+# Sets the traffic conditions for the x coordinate
+lst = ["r", "y", "g"] * num_of_gridlines
+x_traffic = []
+def cycle_through_traffic_x(height, gridlines):
+    x_lst = random.sample(lst, num_of_gridlines)
+    for i in range(0, gridlines):
+        plt.plot([i, i + 1], [height, height], c = x_lst[i], lw= 5.5)
+        if x_lst[i] == "g":
+            x_traffic.append("1")
+        elif x_lst[i] == "y":
+            x_traffic.append("2")
+        elif x_lst[i] == "r":
+            x_traffic.append("3")
+
+lst = ["r", "y", "g"] * num_of_gridlines
+y_traffic = []
+def cycle_through_traffic_y(gridlines, decrease):
+    y_lst = random.sample(lst, num_of_gridlines + 1)
+    for i in range(0, gridlines + 1):
+        plt.plot([i, i], [decrease , decrease - 1], c = y_lst[i], lw= 5.5)
+        if y_lst[i] == "g":
+            y_traffic.append("1")
+        elif y_lst[i] == "y":
+            y_traffic.append("2")
+        elif y_lst[i] == "r":
+            y_traffic.append("3")
+
+
+# Sets the traffic conditions for the x coordinate
+for x_t in reversed(range(0, num_of_gridlines + 1)):
+    cycle_through_traffic_x(x_t, num_of_gridlines)
+print(x_traffic)
 # Sets the traffic conditions for the y coordinate
-for i in range(1, num_of_stops + 2):
-    traffic_cond_y = random.randint(1, 3)
-    if traffic_cond_y == 1:
-        plt.axvline(x = i - 1, ymin = 0, ymax = num_of_stops, c = "g", linewidth = 5.5)
-    elif traffic_cond_y == 2:
-        plt.axvline(x = i - 1, ymin = 0, ymax = num_of_stops, c = "y", linewidth = 5.5)
-    elif traffic_cond_y == 3:
-         plt.axvline(x = i - 1, ymin = 0, ymax = num_of_stops, c = "r", linewidth = 5.5)
-         
+for y_t in reversed(range(1, num_of_gridlines + 1)):
+    cycle_through_traffic_y(num_of_gridlines, y_t)
+print(y_traffic)
 #Creates the list with all of the stops name and school in random order
 annotations_1 = ["School"]
 annotations_2 = [chr(ord("@") + number) for number in range(1, num_of_stops + 1)]
 annotations = annotations_1 + annotations_2
-used_annotations = random.sample(annotations, len(annotations))
+print(annotations)
 
 # Plots the line with x and y and sets ccolor to blue marks the points with a dot
 # Also removes the line to remove extra color.
@@ -57,8 +74,8 @@ l = line1.pop(0)
 l.remove()
 
 # Enumerates used_annotations into numbers and then adds text to the points
-for a, labels in enumerate(used_annotations):
-    plt.text(x[a], y[a], used_annotations[a], fontweight = "bold")
+for a, labels in enumerate(annotations):
+    plt.text(x[a], y[a], annotations[a], fontweight = "bold")
 
 x_cords = []
 y_cords = []
