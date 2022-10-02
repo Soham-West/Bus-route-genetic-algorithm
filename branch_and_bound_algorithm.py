@@ -147,12 +147,25 @@ def nodes_to_cords(node):
     return [x, y]
 #print(nodes_to_cords("6"))
 def fastest_2_points(point1, point2):
-    k = ord(point1) - 64
-    s = ord(point2) - 64
-    point1x = x_cords[k]
-    point1y = y_cords[k]
-    point2x = x_cords[s]
-    point2y = y_cords[s]
+    if point1 == "School":
+        point1x = x_cords[0]
+        point1y = y_cords[0]    
+        s = ord(point2) - 64
+        point2x = x_cords[s]
+        point2y = y_cords[s]
+    elif point2 == "School":
+        k = ord(point1) - 64
+        point1x = x_cords[k]
+        point1y = y_cords[k]
+        point2x = x_cords[0]
+        point2y = y_cords[0]
+    else:
+        k = ord(point1) - 64
+        s = ord(point2) - 64
+        point1x = x_cords[k]
+        point1y = y_cords[k]
+        point2x = x_cords[s]
+        point2y = y_cords[s]
     r_path = []
     r_path.append(get_nearest_node(point1x, point1y, point2x, point2y)[1][0])
     start_point = get_nearest_node(point1x, point1y, point2x, point2y)[0]
@@ -176,19 +189,19 @@ def fastest_2_points(point1, point2):
     point2_movement = ((point2x % 1) + (point2y % 1)) * 2
     point_movement = point1_movement + point2_movement
     shortest_d += round(point_movement, 1)
-    return [shortest_d, path, r_path]
+    return [shortest_d, path, r_path, point1x, point1y, point2x, point2y]
 
-def draw_graph(path, r_path):
-    """if r_path[0] = "U":
-        plt.plot[0]"""
+def draw_graph(path, point1x, point1y, point2x, point2y):
+    first_coord_x = nodes_to_cords(path[0])[0]
+    first_coord_y = nodes_to_cords(path[0])[1]
+    plt.plot([point1x, first_coord_x], [point1y, first_coord_y], "b--", lw = 6)
+        #plt.plot[0]
     for i in range(0, len(path) - 1):
         x = nodes_to_cords(path[i])[0]
         y = nodes_to_cords(path[i])[1]
         x_1 = nodes_to_cords(path[i + 1])[0]
         y_1 = nodes_to_cords(path[i + 1])[1]
-        plt.plot([x, x_1], [y, y_1], "aquamarine", lw = 6)
-        #print(x)
-        #print(y)
-        #print(x_1)
-        #print(y_1)
-#plt.show()
+        plt.plot([x, x_1], [y, y_1], "b--", lw = 6)
+    last_coord_x = nodes_to_cords(path[-1])[0]
+    last_coord_y = nodes_to_cords(path[-1])[1]
+    plt.plot([point2x, last_coord_x], [point2y, last_coord_y], "b--", lw = 6)
