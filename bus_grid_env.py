@@ -24,7 +24,6 @@ for s in range(0, num_of_stops + 1):
     x.append(o)
     y.append(h)
 
-
 # Sets the traffic conditions for the x coordinate
 lst = ["r", "y", "g"] * num_of_gridlines
 x_traffic = []
@@ -82,7 +81,6 @@ y_cords = []
 
 # Prints the x coordinates and y coordinates for the branch and bound algorithm
 for x_cord, y_cord in zip(x, y):
-    print(x_cord, y_cord)
     x_cords.append(x_cord)
     y_cords.append(y_cord)
 
