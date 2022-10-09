@@ -18,8 +18,8 @@ def mutate(gen):
     gen[change_index_1] = stop_2
     return gen
 
-num_of_generations = 7
-gen_size = 7
+num_of_generations = 8
+gen_size = 8
 generation_population = []
 best_route, best_score = annotations_2, 1000000
 for x in range(gen_size):
@@ -59,6 +59,7 @@ for i in range(0, len(best_route) - 1):
     point2x = fastest_2_points(best_route[i], best_route[i + 1])[5]
     point2y = fastest_2_points(best_route[i], best_route[i + 1])[6]
     path = fastest_2_points(best_route[i], best_route[i + 1])[1]
+    r_path = fastest_2_points(best_route[i], best_route[i + 1])[2]
     draw_graph(path, point1x, point1y, point2x, point2y)
 
 #draw_graph(path, [])
