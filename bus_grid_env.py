@@ -55,11 +55,11 @@ def cycle_through_traffic_y(gridlines, decrease):
 # Sets the traffic conditions for the x coordinate
 for x_t in reversed(range(0, num_of_gridlines + 1)):
     cycle_through_traffic_x(x_t, num_of_gridlines)
-print(x_traffic)
+
 # Sets the traffic conditions for the y coordinate
 for y_t in reversed(range(1, num_of_gridlines + 1)):
     cycle_through_traffic_y(num_of_gridlines, y_t)
-print(y_traffic)
+
 #Creates the list with all of the stops name and school in random order
 annotations_1 = ["School"]
 annotations_2 = [chr(ord("@") + number) for number in range(1, num_of_stops + 1)]
@@ -83,7 +83,8 @@ y_cords = []
 for x_cord, y_cord in zip(x, y):
     x_cords.append(x_cord)
     y_cords.append(y_cord)
-
+    print(x_cord)
+    print(y_cord)
 # Sets the axis for the grid       
 axis = np.array([0, 4, 0 ,4])
 plt.axis(axis)
@@ -105,3 +106,4 @@ plt.tight_layout()
 plt.grid()
 plt.legend(handles = [green_traffic, yellow_traffic, red_traffic], prop = {"size": 8.5})
 #plt.show()
+
