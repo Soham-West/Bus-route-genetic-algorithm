@@ -39,11 +39,11 @@ def get_nearest_node(point1_x, point1_y, point2_x, point2_y):
     s_path = []
     if y_1.is_integer() == True and x_2 > x_1:
         s_path.append("R")
-        t = math.floor(int(x_1) + 1.0)
+        t = math.floor(x_1 + 1.0)
         z = [t, int(y_1)]
     elif y_1.is_integer() == True and x_2 < x_1:
         s_path.append("L")
-        t = math.ceil(int(x_1) - 1.0)
+        t = math.ceil(x_1 - 1.0)
         z = [t, int(y_1)]
     elif x_1.is_integer() == True and y_2 > y_1:
         s_path.append("U")
@@ -69,10 +69,10 @@ def end_node(p1x, p1y, p2x, p2y):
     y_2 = float(p2y)
     l_path = []
     if y_1.is_integer() == True and x_2 > x_1:
-        t = math.floor(int(x_1) + 1.0)
+        t = math.floor(x_1 + 1.0)
         z = [t, int(y_1)]
     elif y_1.is_integer() == True and x_2 < x_1:
-        t = math.ceil(int(x_1) - 1.0)
+        t = math.ceil(x_1 - 1.0)
         z = [t, int(y_1)]
     elif x_1.is_integer() == True and y_2 > y_1:
         t = math.floor(y_1 + 1.0)
